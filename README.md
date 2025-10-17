@@ -1,9 +1,9 @@
-###  NAME: DHANUSHA K
-###  ROLL NO :212223040034
-###  DEPARTMENT: B.E CSE
-
-
 # EXPERIMENT--04-INTERUPT-GENRATION-USING-SENSOR-AND-VISUALIZING-USING-SERIAL-MONITOR
+
+###  DATE: 17/10/2025
+###  NAME:DHANUSHA.K
+###  ROLL NO : 212223040034
+###  DEPARTMENT: CSE
 
 ### Aim:
 To Interface a IR Sensor to digital port of iot development board  and generate an interrupt and visualize on the serial monitor 
@@ -112,9 +112,6 @@ The diagram below shows how the GPIO pins are connected to the 16 interrupt line
 ![image](https://github.com/vasanthkumarch/EXPERIMENT--04-INTERUPT-GENRATION-USING-SENSOR-AND-VISUALIZING-USING-SERIAL-MONITOR/assets/36288975/cd2c17fc-afac-4d72-97f9-20db3e63f23f)
 19. click on the run to observe the values 
 
-
-  
-
 ## STM 32 CUBE PROGRAM :
 ```
 /* USER CODE BEGIN Header */
@@ -125,12 +122,13 @@ The diagram below shows how the GPIO pins are connected to the 16 interrupt line
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -138,15 +136,21 @@ The diagram below shows how the GPIO pins are connected to the 16 interrupt line
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include"stdbool.h"
-#include<stdio.h>
+#include "stdio.h"
 bool IRSENSOR;
 void IRPAIR();
 static void MX_GPIO_Init(void);
-#if defined(__ICCARM__) || defined(__ARMCC_VERSION)
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#elif defined(__GNUC__)
+//#if defined(__ICCARM) || defined(__ARMCC__VERSION)
+//#define PUTCHAR_PROTOTYPE int fputc(int ch,FILE *f)
+//#elif defined(__GNUC__)
+//#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+//#endif
+//#if defined(_ICCARM) || defined(_ARMCC_VERSION)
+//#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#if defined(__GNUC__)
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #endif
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -160,7 +164,6 @@ static void MX_GPIO_Init(void);
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -194,7 +197,6 @@ static void MX_USART2_UART_Init(void);
   */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -232,28 +234,27 @@ int main(void)
 }
 void IRPAIR()
 {
-IRSENSOR = HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4);
-if(IRSENSOR==0)
-
-{
-HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
-printf("Obstacle Detected\n");
-HAL_Delay(1000);
-}
-else
-{
-HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
-printf("Obstacle Not Detected\n");
-HAL_Delay(1000);
-}
-}
-
-PUTCHAR_PROTOTYPE
-{
-  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
-  return ch;
-}
-
+	IRSENSOR = HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4);
+	if(IRSENSOR==0)
+	{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+		printf("Obstacle Detected\n");
+	HAL_Delay(1000);
+	//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
+	//HAL_Delay(1000);
+	}
+	else
+	{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
+		printf("Obstacle Not Detected\n");
+	HAL_Delay(1000);
+	}
+	}
+	PUTCHAR_PROTOTYPE
+	{
+	HAL_UART_Transmit(&huart2,(uint8_t*)&ch,1,0xFFFF);
+	return ch;
+	}
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -266,8 +267,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
-
-  /** Initializes the CPU, AHB and APB buses clocks
+  /** Initializes the CPU, AHB and APB busses clocks
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_MSI;
   RCC_OscInitStruct.MSIState = RCC_MSI_ON;
@@ -278,7 +278,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-
   /** Configure the SYSCLKSource, HCLK, PCLK1 and PCLK2 clocks dividers
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK3|RCC_CLOCKTYPE_HCLK
@@ -352,9 +351,6 @@ static void MX_USART2_UART_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -376,9 +372,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -399,7 +392,8 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-#ifdef USE_FULL_ASSERT
+
+#ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
@@ -416,25 +410,17 @@ void assert_failed(uint8_t *file, uint32_t line)
 }
 #endif /* USE_FULL_ASSERT */
 
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+
 ```
-
-
-
 ## Output screen shots of serial port utility   :
-<img width="1918" height="1017" alt="Screenshot 2025-10-10 144210" src="https://github.com/user-attachments/assets/6c4bcf8f-b0fb-4f85-b422-98a9b77a421a" />
+<img width="1920" height="1080" alt="Screenshot (114)" src="https://github.com/user-attachments/assets/ea2e2423-5022-4495-b66a-8542c0bf93b2" />
 
- 
  ## Circuit board :
- ## Obstacle Detected
  
-![WhatsApp Image 2025-10-10 at 18 54 10_b0a96c0d](https://github.com/user-attachments/assets/923edfa7-4aff-4079-a93f-6fdf92a50a5a)
+ <img width="359" height="742" alt="image" src="https://github.com/user-attachments/assets/1aaeacef-3f70-4b4e-857c-418118a4b793" />
 
- ## Obstacle not detected
 
- <img width="372" height="431" alt="image" src="https://github.com/user-attachments/assets/322e5e01-d1f6-446f-bfe1-d892f5839758" />
-
- 
- 
- 
 ## Result :
 Interfacing a  IR SENSOR and interrupt is generated using external interrupt mode , visualized on serial port 
