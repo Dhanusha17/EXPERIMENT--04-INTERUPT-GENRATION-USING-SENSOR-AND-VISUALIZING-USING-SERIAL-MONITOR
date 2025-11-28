@@ -401,4 +401,4 @@ void assert_failed(uint8_t *file, uint32_t line)
 
 
 ## Result :
-Interfacing a  IR SENSOR and interrupt is generated using external interrupt mode , visualized on serial port 
+Interfacing a  IR SENSOR and interrupt is generated using external interrupt mode , visualized on serial port.
